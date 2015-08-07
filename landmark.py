@@ -358,6 +358,8 @@ class Image(object):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+    def flip_x(self):
+        self.img = cv2.flip(self.img,1) # 1 means flipping around the x-axis
 
     #def draw_kp(self):
     #    #path = REPORTDATA + '/' + self.get_fname()
