@@ -39,6 +39,8 @@ if __name__ == '__main__':
     all_imgs = preprocesser.load_image(DATASETPATH)
 
     train_, val_, test_ = preprocesser.split_data(all_imgs)
+    # data augmentation
+    train_ = preprocesser.data_augmentation(train_, flip_x=True)
     # setting the label
     y_train_ = np.asarray([each.label for each in train_])
     y_val_ = np.asarray([each.label for each in val_])
@@ -46,8 +48,6 @@ if __name__ == '__main__':
     Y_train = np_utils.to_categorical(y_train_, NB_CLASS)
     Y_val = np_utils.to_categorical(y_val_, NB_CLASS)
     Y_test = np_utils.to_categorical(y_test_, NB_CLASS)
-    # data augmentation
-    train_ = preprocesser.data_augmentation(train_, flip_x=True)
     # change the suitable format
     x_train_, y_train_ = preprocesser.img2matrix(train_)
     x_val_, y_val_ = preprocesser.img2matrix(val_)
@@ -55,7 +55,6 @@ if __name__ == '__main__':
     # preprocessing
     X_train, X_val, X_test = preprocesser.mean_subtraction(x_train_, x_val_, x_test_)
     X_train, X_val, X_test = preprocesser.normalization(X_train, X_val, X_test)
-
     # setting hyper-param for CNN
     model = CNNSetting(model_name=create_VGGNet_v1, n_class=NB_CLASS, fname='vggNet1_t10_data_aug')
     model.training_param(lr=0.005, layer_reg=0.0005, sgd_reg=0.05, decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
