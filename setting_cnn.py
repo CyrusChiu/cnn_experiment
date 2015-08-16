@@ -117,7 +117,7 @@ class CNNSetting(object):
             # early stopping
             # if the latest 3 records of training acc are 1.0
             if self.early_stop == True:
-                if t_acc[::-1][:3] == [1.0, 1.0, 1.0]:
+                if t_acc[::-1][:5] == [1.0, 1.0, 1.0, 1.0, 1.0]:
                     # and if the latest val acc is less then previous one
                     if v_acc[::-1][0] <= v_acc[::-1][1]:
                         msg = 'early stopping at epoch %s' %(str(e+1))
