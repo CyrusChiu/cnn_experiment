@@ -13,8 +13,7 @@ from coding import *
 from gettingFile import get_all_imgfiles
 from preprocessing import ImagePreprocessing
 
-from create_cnn_model import create_alexNet_v1
-from create_cnn_model import create_VGGNet_v1, create_VGGNet_v2
+from create_cnn_model import create_VGGNet_v1, create_alexNet_v1
 from setting_cnn import CNNSetting
 
 import pdb
@@ -40,7 +39,7 @@ if __name__ == '__main__':
 
     train_, val_, test_ = preprocesser.split_data(all_imgs)
     # data augmentation
-    train_ = preprocesser.data_augmentation(train_, flip_x=True)
+    #train_ = preprocesser.data_augmentation(train_, flip_x=True)
     # setting the label
     y_train_ = np.asarray([each.label for each in train_])
     y_val_ = np.asarray([each.label for each in val_])
@@ -56,7 +55,7 @@ if __name__ == '__main__':
     X_train, X_val, X_test = preprocesser.mean_subtraction(x_train_, x_val_, x_test_)
     X_train, X_val, X_test = preprocesser.normalization(X_train, X_val, X_test)
     # setting hyper-param for CNN
-    model = CNNSetting(model_name=create_VGGNet_v1, n_class=NB_CLASS, fname='vggNet1_t10_data_aug')
+    model = CNNSetting(model_name=create_alexNet_v1, n_class=NB_CLASS, fname='alexNet1_t1')
     model.training_param(lr=0.005, layer_reg=0.0005, sgd_reg=0.05, decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
     # training CNN
     model.train(X_train,Y_train,X_val,Y_val)

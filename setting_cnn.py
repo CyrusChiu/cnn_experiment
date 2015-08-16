@@ -12,8 +12,7 @@ from feature import *
 from coding import *
 from gettingFile import get_all_imgfiles
 
-from create_cnn_model import create_alexNet_v1
-from create_cnn_model import create_VGGNet_v1, create_VGGNet_v2
+from create_cnn_model import create_VGGNet_v1, create_alexNet_v1
 
 import pdb
 import json
