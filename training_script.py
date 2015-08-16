@@ -55,8 +55,8 @@ if __name__ == '__main__':
     X_train, X_val, X_test = preprocesser.mean_subtraction(x_train_, x_val_, x_test_)
     X_train, X_val, X_test = preprocesser.normalization(X_train, X_val, X_test)
     # setting hyper-param for CNN
-    model = CNNSetting(model_name=create_alexNet_v1, n_class=NB_CLASS, fname='alexNet1_t1')
-    model.training_param(lr=0.005, layer_reg=0.0005, sgd_reg=0.05, decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
+    model = CNNSetting(model_name=create_alexNet_v1, n_class=NB_CLASS, fname='alexNet1_t2')
+    model.training_param(lr=0.01, layer_reg=0.0005, sgd_reg=0.05, decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
     # training CNN
     model.train(X_train,Y_train,X_val,Y_val)
 
