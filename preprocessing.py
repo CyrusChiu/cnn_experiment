@@ -27,16 +27,18 @@ class ImagePreprocessing(object):
         X_train, X_val, Y_train, Y_val = train_test_split(X_train_,Y_train_,train_size=0.7, random_state=0)
         return X_train, X_val, X_test
 
-    def img2matrix(self,img_list):
+    def img2matrix(self,img_list, resize):
         """
         img_list: list of objImage
+        resize: int, resize image to fit CNN
         """
         n_data = len(img_list)
         data, label = [], []
         for i,each in enumerate(img_list):
             #img = cv2.imread(each.path)
             img = each.img
-            img = cv2.resize(img,(224,224)) # should be improved
+            img = cv2.resize(img,(resize,resize)) # should be improved
+            # vggNet use size 224*224
             img_rgb = img.swapaxes(0,2).swapaxes(1,2) #(3,height,width)
             arr = np.asarray(img_rgb,dtype="float32")
             data.append(arr)
