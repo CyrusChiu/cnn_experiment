@@ -115,15 +115,17 @@ class CNNSetting(object):
                 model.save_weights(fname)
 
             # early stopping
-            # if the latest 3 records of training acc are 1.0
+            # if the latest 5 records of training acc are 1.0
             if self.early_stop == True:
                 if t_acc[::-1][:5] == [1.0, 1.0, 1.0, 1.0, 1.0]:
                     # and if the latest val acc is less then previous one
                     if v_acc[::-1][0] < v_acc[::-1][1]:
-                        msg = 'early stopping at epoch %s' %(str(e+1))
-                        self.early_stop_msg = msg
-                        print msg
-                        break
+                        # and if the latest train cost less then 0.2
+                        if t_cost[::-1][0] < 0.2:
+                            msg = 'early stopping at epoch %s' %(str(e+1))
+                            self.early_stop_msg = msg
+                            print msg
+                            break
 
         top_5 = model_weights[::-1][:5]
         to_del = list(set(model_weights) - set(top_5))
