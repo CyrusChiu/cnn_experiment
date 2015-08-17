@@ -119,7 +119,7 @@ class CNNSetting(object):
             if self.early_stop == True:
                 if t_acc[::-1][:5] == [1.0, 1.0, 1.0, 1.0, 1.0]:
                     # and if the latest val acc is less then previous one
-                    if v_acc[::-1][0] <= v_acc[::-1][1]:
+                    if v_acc[::-1][0] < v_acc[::-1][1]:
                         msg = 'early stopping at epoch %s' %(str(e+1))
                         self.early_stop_msg = msg
                         print msg
