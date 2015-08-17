@@ -14,6 +14,7 @@ from gettingFile import get_all_imgfiles
 from preprocessing import ImagePreprocessing
 
 from create_cnn_model import create_VGGNet_v1, create_alexNet_v1
+from create_cnn_model import create_tinyVggNet_v1
 from setting_cnn import CNNSetting
 
 import pdb
@@ -48,15 +49,15 @@ if __name__ == '__main__':
     Y_val = np_utils.to_categorical(y_val_, NB_CLASS)
     Y_test = np_utils.to_categorical(y_test_, NB_CLASS)
     # change the suitable format
-    x_train_, y_train_ = preprocesser.img2matrix(train_)
-    x_val_, y_val_ = preprocesser.img2matrix(val_)
-    x_test_, y_test_ = preprocesser.img2matrix(test_)
+    x_train_, y_train_ = preprocesser.img2matrix(train_, resize=32)
+    x_val_, y_val_ = preprocesser.img2matrix(val_, resize=32)
+    x_test_, y_test_ = preprocesser.img2matrix(test_, resize=32)
     # preprocessing
     X_train, X_val, X_test = preprocesser.mean_subtraction(x_train_, x_val_, x_test_)
     X_train, X_val, X_test = preprocesser.normalization(X_train, X_val, X_test)
     # setting hyper-param for CNN
-    model = CNNSetting(model_name=create_alexNet_v1, n_class=NB_CLASS, fname='alexNet1_t2')
-    model.training_param(lr=0.01, layer_reg=0.0005, sgd_reg=0.05, decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
+    model = CNNSetting(model_name=create_tinyVggNet_v1, n_class=NB_CLASS, fname='tinyVggNet_t1')
+    model.training_param(lr=0.01, layer_reg=0., sgd_reg=0., decay=0.0005, momentum=0.9, n_epoch=200, batch_size=16, early_stop=True)
     # training CNN
     model.train(X_train,Y_train,X_val,Y_val)
 
