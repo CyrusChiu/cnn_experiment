@@ -202,6 +202,47 @@ def create_alexNet_v1(nb_class, layer_reg):
     return model
 
 
+def create_tinyVggNet_v1(nb_class, layer_reg):
+    """ This model refer to keras cfiar10 model
+    https://github.com/fchollet/keras/blob/master/examples/cifar10_cnn.py
+    similar to vggNet
+    """
+    model = Sequential()
+
+    # conv1
+    model.add(Convolution2D(32, 3, 3, 3, W_regularizer=l2(layer_reg), init='he_normal', border_mode='valid'))
+    model.add(Activation('relu'))
+    # conv2
+    model.add(Convolution2D(32, 32, 3, 3, W_regularizer=l2(layer_reg), init='he_normal', border_mode='valid'))
+    model.add(Activation('relu'))
+    # pool2
+    model.add(MaxPooling2D(poolsize=(2, 2)))
+    # conv3
+    model.add(Convolution2D(64, 32, 3, 3, W_regularizer=l2(layer_reg), init='he_normal', border_mode='valid'))
+    model.add(Activation('relu'))
+    # conv4
+    model.add(Convolution2D(64, 64, 3, 3, W_regularizer=l2(layer_reg), init='he_normal', border_mode='valid'))
+    model.add(Activation('relu'))
+    # pool4
+    model.add(MaxPooling2D(poolsize=(2, 2)))
+
+    # fc5
+    model.add(Flatten())
+    # (64,8,8) -> input 64
+    # 8*8 since cifar10 input image are 32*32 -> pool2:16*16 -> poo4:8*8 -> 8
+    # 5 maye I use border mode "valid" is different to original
+    model.add(Dense(64*5*5, 512, init='normal'))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.5))
+
+    # output fc6
+    model.add(Dense(512, nb_class, init='normal'))
+    model.add(Activation('softmax'))
+
+    return model
+
+
+
 #def create_VGGNet_v3(nb_class):
 #    """ This is the original VGGNet
 #    My computer can not handle this right now
